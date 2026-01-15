@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme d'abonnement en ligne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: #f8fafc;
+        }
+
+        /* ===== PAGE INDEX ===== */
+        .index-page {
+            display: block;
+        }
+
+        .signup-page,
+        .payment-page,
+        .dashboard-page {
+            display: none;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-btn {
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-btn {
+            background: #2563eb;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        .cta-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Features */
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #dbeafe;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* ===== PAGE SIGNUP ===== */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .auth-box h2 {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== PAGE PAYMENT ===== */
+        .payment-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .stripe-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stripe-logo span {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #635bff;
+            letter-spacing: -1px;
+        }
+
+        .payment-info {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .payment-info p {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #475569;
+        }
+
+        .payment-info p:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #1e293b;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .card-element {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 1rem;
+            background: #f8fafc;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 26px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .secure-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 1.5rem;
+        }
+
+        /* ===== PAGE DASHBOARD ===== */
+        .dashboard-page {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .dashboard-layout {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: white;
+            min-height: 100vh;
+            padding: 2rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-logo {
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 0.875rem 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu li.active {
+            background: #dbeafe;
+            color: #2563eb;
+            border-left: 3px solid #2563eb;
+        }
+
+        .sidebar-menu li:hover {
+            background: #f1f5f9;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.75rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== PAGE INDEX ===== -->
+    <div class="index-page">
+        <nav>
+            <div class="nav-container">
+                <div class="logo">PaySub</div>
+                <button class="nav-btn" onclick="showPage('signup')">S'inscrire</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Plateforme d'abonnement en ligne</h1>
+            <p class="subtitle">Encaissez vos paiements et gérez vos clients facilement</p>
+            <button class="cta-btn" onclick="showPage('signup')">S'inscrire</button>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Paiement sécurisé</h3>
+                <p>Acceptez les paiements en toute sécurité avec notre système de paiement intégré. Conformité PCI-DSS
+                    garantie.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Espace client</h3>
+                <p>Offrez à vos clients un espace personnel pour gérer leurs abonnements et consulter leurs factures.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Gestion abonnements</h3>
+                <p>Pilotez vos abonnements, suivez vos revenus et automatisez vos relances de paiement.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== PAGE SIGNUP ===== -->
+    <div class="signup-page">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2>Créer un compte</h2>
+                <p class="auth-subtitle">Commencez votre essai gratuit aujourd'hui</p>
+
+                <form onsubmit="event.preventDefault(); showPage('payment');">
+                    <div class="form-group">
+                        <label for="email">Adresse email</label>
+                        <input type="email" id="email" placeholder="votre@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Créer un compte</button>
+                </form>
+
+                <div class="back-link">
+                    <a href="#" onclick="showPage('index'); return false;">← Retour à l'accueil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAGE PAYMENT ===== -->
+    <div class="payment-page">
+        <div class="auth-container">
+            <div class="payment-box">
+                <div class="stripe-logo">
+                    <span>stripe</span>
+                </div>
+
+                <h2 style="text-align: center; margin-bottom: 2rem;">Paiement sécurisé</h2>
+
+                <div class="payment-info">
+                    <p><span>Abonnement mensuel</span> <span>29,99 €</span></p>
+                    <p><span>Total</span> <span>29,99 €</span></p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); showPage('dashboard');">
+                    <div class="form-group">
+                        <label>Numéro de carte</label>
+                        <div class="card-element">
+                            4242 4242 4242 4242
+                            <div class="card-icons">
+                                <div class="card-icon">VISA</div>
+                                <div class="card-icon">MC</div>
+                                <div class="card-icon">AMEX</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Date d'expiration</label>
+                            <div class="card-element">MM / AA</div>
+                        </div>
+                        <div class="form-group">
+                            <label>CVC</label>
+                            <div class="card-element">123</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Payer 29,99 € (démo)</button>
+                </form>
+
+                <div class="secure-notice">
+                    🔒 Paiement sécurisé par Stripe
+                </div>
+
+                <div class="back-link">
+                    <a href="#" onclick="showPage('signup'); return false;">← Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAGE DASHBOARD ===== -->
+    <div class="dashboard-page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">PaySub</div>
+                <ul class="sidebar-menu">
+                    <li class="active">📊 Tableau de bord</li>
+                    <li>💳 Abonnements</li>
+                    <li>📄 Factures</li>
+                    <li>⚙️ Paramètres</li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <h1>Bienvenue sur votre espace</h1>
+                    <p style="color: #64748b; margin-bottom: 1rem;">Votre abonnement est actif et tout fonctionne
+                        parfaitement.</p>
+                    <span class="status-badge">✓ Abonnement actif</span>
+                </div>
+
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3>Statut de l'abonnement</h3>
+                        <p>Actif</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Prochaine facturation</h3>
+                        <p>15 février 2026</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Montant mensuel</h3>
+                        <p>29,99 €</p>
+                    </div>
+                </div>
+
+                <button class="logout-btn" onclick="showPage('index')">Se déconnecter</button>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            document.querySelector('.index-page').style.display = 'none';
+            document.querySelector('.signup-page').style.display = 'none';
+            document.querySelector('.payment-page').style.display = 'none';
+            document.querySelector('.dashboard-page').style.display = 'none';
+
+            if (page === 'index') {
+                document.querySelector('.index-page').style.display = 'block';
+            } else if (page === 'signup') {
+                document.querySelector('.signup-page').style.display = 'block';
+            } else if (page === 'payment') {
+                document.querySelector('.payment-page').style.display = 'block';
+            } else if (page === 'dashboard') {
+                document.querySelector('.dashboard-page').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>
